@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 import axios from "axios";
+
+const taskAPi = "https://alson-task-api.vercel.app"
 function TaskManager()
 {
     // AllTaskState
@@ -28,7 +30,7 @@ function TaskManager()
     async function getAllTask() // working === successfully
     {
         console.log("Getting all Tasks");
-        await axios.get('http://localhost:5001/tasks')
+        await axios.get(`${taskAPi}/tasks`)
             .then((res)=>{
                 console.log(res)
                 if (res.data)
@@ -74,7 +76,8 @@ function TaskManager()
         console.log("getting single tasks");
         try
         {
-            const res = await axios.get(`http://localhost:5001/task/${singleTaskFormData.taskId}`);
+            
+            const res = await axios.get(`${taskAPi}/task/${singleTaskFormData.taskId}`);
             console.log(res);
             const data = await res.data;
             setTaskData([data]);
@@ -108,7 +111,7 @@ function TaskManager()
 
     // UPDATE FUNCTIONALITY SETUP
 
-    const [displayUpdateForm,setDisplayUpdateForm] = useState(false);
+    const [displayUpdateForm, setDisplayUpdateForm] = useState(false);
     const [updateFormItem, setUpdateFormItem] = useState({
         taskDetail: ""
     });
@@ -150,7 +153,13 @@ function TaskManager()
     {
         try
         {
-            const res = await axios.put("http://localhost:5001/task/685cfb3543ad3a0166eb1480", taskUpdateData);
+            const res = await axios.put(`${taskAPi}/task/${singleTaskFormData.taskId}`, taskUpdateData,{
+                headers: {'Content-Type': "application/json"},
+                withCredentials: true
+            }
+            );
+            // const res = await axios.put("http://localhost:5001/task/685cfb3543ad3a0166eb1480", taskUpdateData);
+            
             const data = await res.data;
             setTaskData([data]);
             // console.log("This is updateTask");
@@ -201,10 +210,15 @@ function TaskManager()
     {
         try
         {
-            const res = await axios.post("http://localhost:5001/task", newTaskData);
-            // console.log(res);
+            // const res = await axios.post("http://localhost:5001/task", newTaskData);
+            const res = await axios.post(`${taskAPi}/task`, newTaskData, {
+                headers : {"Content-Type": "application/json"},
+                withCredentials: true
+            });
+            console.log(res);
             const {data} = res;
             setTaskData([data]);
+
 
         }
         catch(err)
@@ -231,7 +245,10 @@ function TaskManager()
     {
         try
         {
-            const res = await axios.delete(`http://localhost:5001/task/${singleTaskFormData.taskId}`);
+            const res = await axios.delete(`${taskAPi}/task/${singleTaskFormData.taskId}`, {
+                headers: {'Content-Type': 'application/json'},
+                withCredentials: true
+            });
             console.log(res);
             const {msg}= res.data;
             setDeleteMsg(msg);
@@ -254,7 +271,7 @@ function TaskManager()
             console.log(`the following are taskItem`);
             console.log(taskItem)
             return (
-                <div className="shadow-[0px_0px_5px_blue] bg-gradient-to-r from-slate-200 dark:from-gray-900 to-slate-400 dark:to-gray-900 p-[20px] rounded-md" id={taskItem._id}>
+                <div className="shadow-[0px_0px_5px_blue] bg-gradient-to-r from-slate-200 dark:from-slate-700 dark:to-slate-700 to-slate-400 p-[20px] rounded-md" id={taskItem._id}>
                     <p className="text-[18px]"><span className="font-bold">task Name :</span> {taskItem.task_name}</p>
                     <p className="text-[18px]"><span className="font-bold">task Description:</span> {taskItem.task_description}</p>
                     <p className="text-[18px]"><span className="font-bold">task Priority:</span> {taskItem.priority}</p>
@@ -273,12 +290,12 @@ function TaskManager()
         setUpdateFormItem({taskDetail: ""})
         setDisplayUpdateForm(false);
         setDisplayNewTaskForm(false);
+        setDisplayDeleteForm(false);
         setTaskData({});
     }
-    // sign into github to access your repositories and Github action workflows
     return (
         <section className="dark:bg-gray-900  w-full border-2 border-black py-[50px] ">
-            <h1 className="text-center text-[30px] text-bold dark:text-white">TasksManager</h1>
+            <h1 className="text-center text-[30px] text-bold">TasksManager</h1>
 
             <div className="w-[1200px] mx-auto dark:text-white  p-[50px] rounded-md dark:bg-gray-800 ">
 
@@ -316,7 +333,7 @@ function TaskManager()
                     displaySingleTaskForm && 
                     (<form onSubmit={handleSingleSubmit} className="shadow-[0px_0px_5px_gray] py-[20px] px-[10px] mt-[50px] rounded-md">
                         <label htmlFor="taskId">Enter TaskID: </label>
-                        <input onChange={handleSingleChange} className="block border-[1.2px] py-[2px] px-[10px] rounded-md border-black w-full" name="taskId" value={singleTaskFormData.taskId} type="text" placeholder="task id..."/>
+                        <input onChange={handleSingleChange} className="block border-[1.2px] py-[2px] px-[10px] rounded-md border-black w-full text-black" name="taskId" value={singleTaskFormData.taskId} type="text" placeholder="task id..."/>
                         <input  className="bg-[rgb(46,204,113)] mt-[10px] px-[5px] w-[100px] py-[2.5px] rounded-[5px]" type="submit" value="submit"/>
                     </form>)
                     //onSubmit getSingleTask will be used to fetch the data on the given id
@@ -427,6 +444,7 @@ function TaskManager()
                         </form>
                     )
                 }
+
 
                 {/* DELETE FORM */}
                 {
