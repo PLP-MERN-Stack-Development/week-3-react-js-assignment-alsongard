@@ -68,4 +68,11 @@ Your work will be automatically submitted when you push to your GitHub Classroom
 - [React Documentation](https://react.dev/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Vite Documentation](https://vitejs.dev/guide/)
-- [React Router Documentation](https://reactrouter.com/) 
+- [React Router Documentation](https://reactrouter.com/)
+
+
+MOVE TO THE FOLKED REPOSITORY TO VIEW NEW CHANGES: 
+[folked_repository](https://github.com/alsongard/week-3-react-js-assignment-alsongard)
+[task_manager_website](https://my-tasks-project.vercel.app/)
+[task_manager_api](https://alson-task-api.vercel.app/)   
+
