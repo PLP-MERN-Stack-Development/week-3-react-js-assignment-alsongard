@@ -254,7 +254,7 @@ function TaskManager()
             console.log(`the following are taskItem`);
             console.log(taskItem)
             return (
-                <div className="shadow-[0px_0px_5px_blue] bg-gradient-to-r from-slate-200 to-slate-400 p-[20px] rounded-md" id={taskItem._id}>
+                <div className="shadow-[0px_0px_5px_blue] bg-gradient-to-r from-slate-200 dark:from-gray-900 to-slate-400 dark:to-gray-900 p-[20px] rounded-md" id={taskItem._id}>
                     <p className="text-[18px]"><span className="font-bold">task Name :</span> {taskItem.task_name}</p>
                     <p className="text-[18px]"><span className="font-bold">task Description:</span> {taskItem.task_description}</p>
                     <p className="text-[18px]"><span className="font-bold">task Priority:</span> {taskItem.priority}</p>
@@ -275,9 +275,10 @@ function TaskManager()
         setDisplayNewTaskForm(false);
         setTaskData({});
     }
+    // sign into github to access your repositories and Github action workflows
     return (
         <section className="dark:bg-gray-900  w-full border-2 border-black py-[50px] ">
-            <h1 className="text-center text-[30px] text-bold">TasksManager</h1>
+            <h1 className="text-center text-[30px] text-bold dark:text-white">TasksManager</h1>
 
             <div className="w-[1200px] mx-auto dark:text-white  p-[50px] rounded-md dark:bg-gray-800 ">
 
@@ -426,7 +427,6 @@ function TaskManager()
                         </form>
                     )
                 }
-
 
                 {/* DELETE FORM */}
                 {

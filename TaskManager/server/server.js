@@ -1,10 +1,17 @@
 const express = require("express");
 const app = express();
 const Task = require("./models/tasks.model.js");
-require("dotenv").config()
+require("dotenv").config();
+const cors = require('cors');
 const mongoose = require("mongoose");
 
-
+app.use(cors(
+    {
+        origin: ["https:"],
+        methods: ["POST", "PUT", "DELETE", "GET"],
+        credentials: true
+    }
+))
 app.use(express.json());
 app.use(express.urlencoded({extend:false}));
 // require("")
